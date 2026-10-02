@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fire Tournament | Squad Registration</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#090b12;color:#fff}
+.container{max-width:1050px;margin:auto;padding:20px}
+.hero{padding:55px 20px;text-align:center;background:linear-gradient(135deg,#10162b,#171020)}
+.badge{display:inline-block;padding:7px 13px;border:1px solid #4d5cff;border-radius:999px;color:#aeb5ff;font-size:13px}
+h1{font-size:clamp(34px,7vw,64px);margin:15px 0 8px}.hero p{color:#b9bfd0;font-size:17px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0}
+.card{background:#111522;border:1px solid #252b3e;border-radius:16px;padding:18px}.card b{font-size:21px}.muted{color:#9ea6b8}
+section{background:#0f1320;border:1px solid #252b3e;border-radius:20px;padding:24px;margin:20px 0}
+h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:700;font-size:14px;margin-bottom:7px}input,select,textarea{width:100%;padding:13px 14px;border-radius:10px;border:1px solid #30374d;background:#090c15;color:#fff;outline:none}input:focus,select:focus{border-color:#6570ff}
+.full{grid-column:1/-1}.qr{display:flex;gap:22px;align-items:center;flex-wrap:wrap}.qr img{width:190px;height:190px;object-fit:contain;background:#fff;border-radius:14px;padding:8px}.upi{font-size:18px;color:#cbd0ff}
+button{width:100%;padding:15px;border:0;border-radius:12px;background:#5865f2;color:#fff;font-size:17px;font-weight:800;cursor:pointer;margin-top:8px}button:hover{filter:brightness(1.1)}button:disabled{opacity:.6}
+.note{background:#171c2c;border-left:4px solid #5865f2;padding:13px;border-radius:8px;color:#c8cddd}
+#status{margin-top:15px;padding:13px;border-radius:10px;display:none}
+.success{background:#12331f;color:#8ff0ac}.error{background:#3a1515;color:#ffaaaa}
+footer{text-align:center;color:#747d91;padding:25px}
+.small{font-size:12px;color:#858da0}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <span class="badge">FREE FIRE TOURNAMENT</span>
+    <h1 id="eventName">YOUR TOURNAMENT NAME</h1>
+    <p>Register your squad • Pay the entry fee • Upload payment proof</p>
+  </div>
+</header>
+
+<main class="container">
+  <div class="cards">
+    <div class="card"><div class="muted">Entry Fee</div><b id="entryFee">₹100</b></div>
+    <div class="card"><div class="muted">Format</div><b id="format">Squad / 4 Players</b></div>
+    <div class="card"><div class="muted">Match Date</div><b id="matchDate">Tomorrow</b></div>
+    <div class="card"><div class="muted">Contact</div><b id="contact">Your WhatsApp</b></div>
+  </div>
+
+  <section>
+    <h2>1. Pay Entry Fee</h2>
+    <div class="qr">
+      <img src="qr.png" alt="UPI QR Code">
+      <div>
+        <p>Scan the QR code and complete the payment.</p>
+        <p class="upi">UPI ID: <strong id="upiId">YOUR-UPI@upi</strong></p>
+        <p class="small">After payment, keep your transaction/reference ID and screenshot ready.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Squad Registration</h2>
+    <form id="registrationForm">
+      <div class="grid">
+        <div>
+          <label>Squad / Team Name *</label>
+          <input name="teamName" required maxlength="40" placeholder="Example: Team Phoenix">
+        </div>
+        <div>
+          <label>Captain Name *</label>
+          <input name="captainName" required maxlength="50" placeholder="Full name">
+        </div>
+        <div>
+          <label>Captain WhatsApp Number *</label>
+          <input name="phone" required type="tel" inputmode="numeric" maxlength="15" placeholder="10-digit number">
+        </div>
+        <div>
+          <label>Captain Free Fire UID *</label>
+          <input name="captainUid" required placeholder="Free Fire UID">
+        </div>
+
+        <div><label>Player 1 Name *</label><input name="player1Name" required></div>
+        <div><label>Player 1 UID *</label><input name="player1Uid" required></div>
+        <div><label>Player 2 Name *</label><input name="player2Name" required></div>
+        <div><label>Player 2 UID *</label><input name="player2Uid" required></div>
+        <div><label>Player 3 Name *</label><input name="player3Name" required></div>
+        <div><label>Player 3 UID *</label><input name="player3Uid" required></div>
+        <div><label>Player 4 Name *</label><input name="player4Name" required></div>
+        <div><label>Player 4 UID *</label><input name="player4Uid" required></div>
+
+        <div>
+          <label>Transaction / UTR ID *</label>
+          <input name="transactionId" required maxlength="80" placeholder="Payment reference number">
+        </div>
+        <div>
+          <label>Payment Screenshot *</label>
+          <input name="paymentScreenshot" required type="file" accept="image/*">
+        </div>
+        <div class="full">
+          <label>Extra Message (optional)</label>
+          <textarea name="message" rows="3" maxlength="300" placeholder="Any note for the organizer"></textarea>
+        </div>
+        <div class="full">
+          <div class="note">By submitting, you confirm that the details and payment information are correct. Your registration is subject to organizer verification.</div>
+        </div>
+        <div class="full">
+          <button id="submitBtn" type="submit">SUBMIT SQUAD REGISTRATION</button>
+          <div id="status"></div>
+        </div>
+      </div>
+    </form>
+  </section>
+</main>
+<footer>© <span id="year"></span> <span id="footerName">Your Tournament</span> • Organized by You</footer>
+
+<script>
+/* ========= EDIT THESE SETTINGS ========= */
+const CONFIG = {
+  EVENT_NAME: "FF Arena",
+  ENTRY_FEE: "₹30 per person",
+  FORMAT: "Squad / 4 Players",
+  MATCH_DATE: "Every Weekend",
+  CONTACT: "FF Arena Organizer",
+  UPI_ID: "abhijit.chavan0018@ptyes",
+  GOOGLE_APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbyDl26q3SC5LMCW-B4IYOdDyeVLRBmPj1RjtkMDpCpkmhba5m-CER3jOnnWwm8rRYu-uA/exec"
+};
+/* ======================================= */
+
+document.getElementById("eventName").textContent=CONFIG.EVENT_NAME;
+document.getElementById("entryFee").textContent=CONFIG.ENTRY_FEE;
+document.getElementById("format").textContent=CONFIG.FORMAT;
+document.getElementById("matchDate").textContent=CONFIG.MATCH_DATE;
+document.getElementById("contact").textContent=CONFIG.CONTACT;
+document.getElementById("upiId").textContent=CONFIG.UPI_ID;
+document.getElementById("footerName").textContent=CONFIG.EVENT_NAME;
+document.getElementById("year").textContent=new Date().getFullYear();
+
+const form=document.getElementById("registrationForm");
+const statusBox=document.getElementById("status");
+const btn=document.getElementById("submitBtn");
+
+function showStatus(msg, ok){
+  statusBox.textContent=msg;
+  statusBox.className=ok?"success":"error";
+  statusBox.style.display="block";
+  statusBox.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+form.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  if(CONFIG.GOOGLE_APPS_SCRIPT_URL.includes("PASTE_")){
+    showStatus("Organizer setup is incomplete. Please add the Google Apps Script URL in the website settings.",false);
+    return;
+  }
+  const file=form.paymentScreenshot.files[0];
+  if(!file){showStatus("Please upload your payment screenshot.",false);return;}
+  if(file.size>5*1024*1024){showStatus("Payment screenshot must be 5 MB or smaller.",false);return;}
+
+  btn.disabled=true; btn.textContent="SUBMITTING...";
+  const data={};
+  for(const [key,value] of new FormData(form).entries()){
+    if(key!=="paymentScreenshot") data[key]=value;
+  }
+  const reader=new FileReader();
+  reader.onload=async()=>{
+    data.screenshotName=file.name;
+    data.screenshotMimeType=file.type;
+    data.screenshotBase64=reader.result.split(",")[1];
+    data.submittedAt=new Date().toISOString();
+    try{
+      const res=await fetch(CONFIG.GOOGLE_APPS_SCRIPT_URL,{
+        method:"POST",
+        headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body:JSON.stringify(data)
+      });
+      const result=await res.json();
+      if(result.success){
+        form.reset();
+        showStatus("Registration submitted successfully! Your squad will be verified by the organizer.",true);
+      }else{
+        showStatus(result.message||"Submission failed. Please try again.",false);
+      }
+    }catch(err){
+      showStatus("Could not submit. Check your internet connection or organizer setup.",false);
+    }finally{
+      btn.disabled=false; btn.textContent="SUBMIT SQUAD REGISTRATION";
+    }
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+</body>
+</html>
